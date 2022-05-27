@@ -1,5 +1,5 @@
 import { objectWithoutPropertiesLoose as _objectWithoutPropertiesLoose, extends as _extends } from '../_virtual/_rollupPluginBabelHelpers.js';
-import { forwardRef, useRef, useMemo } from 'react';
+import { forwardRef, useRef, useMemo, createElement } from 'react';
 import { createPortal } from 'react-dom';
 import { oneOf, exact, number, object, bool, oneOfType, string, func } from 'prop-types';
 import { MenuList } from './MenuList.js';
@@ -9,7 +9,7 @@ import { CloseReason, menuContainerClass, SettingsContext, ItemSettingsContext, 
 import { rootMenuPropTypes } from '../utils/propTypes.js';
 import { safeCall, getTransition, attachHandlerProps, values, isMenuOpen } from '../utils/utils.js';
 
-var _excluded = ["aria-label", "className", "containerProps", "initialMounted", "unmountOnClose", "transition", "transitionTimeout", "boundingBoxRef", "boundingBoxPadding", "reposition", "submenuOpenDelay", "submenuCloseDelay", "skipOpen", "viewScroll", "portal", "theming", "onItemClick", "onClose"];
+var _excluded = ["aria-label", "className", "containerProps", "initialMounted", "unmountOnClose", "transition", "transitionTimeout", "boundingBoxRef", "boundingBoxPadding", "reposition", "submenuOpenDelay", "submenuCloseDelay", "skipOpen", "viewScroll", "portal", "theming", "onItemClick", "onClose", "containerKey"];
 var ControlledMenu = /*#__PURE__*/forwardRef(function ControlledMenu(_ref, externalRef) {
   var ariaLabel = _ref['aria-label'],
       className = _ref.className,
@@ -33,6 +33,7 @@ var ControlledMenu = /*#__PURE__*/forwardRef(function ControlledMenu(_ref, exter
       theming = _ref.theming,
       onItemClick = _ref.onItemClick,
       onClose = _ref.onClose,
+      containerKey = _ref.containerKey,
       restProps = _objectWithoutPropertiesLoose(_ref, _excluded);
 
   var containerRef = useRef(null);
@@ -129,26 +130,27 @@ var ControlledMenu = /*#__PURE__*/forwardRef(function ControlledMenu(_ref, exter
     onBlur: handleBlur
   }, containerProps);
 
-  var menuList = /*#__PURE__*/jsx("div", _extends({}, containerProps, handlers, {
+  var menuList = /*#__PURE__*/createElement("div", _extends({}, containerProps, {
+    key: containerKey
+  }, handlers, {
     className: useBEM({
       block: menuContainerClass,
       modifiers: modifiers,
       className: className
     }),
-    ref: containerRef,
-    children: state && /*#__PURE__*/jsx(SettingsContext.Provider, {
-      value: settings,
-      children: /*#__PURE__*/jsx(ItemSettingsContext.Provider, {
-        value: itemSettings,
-        children: /*#__PURE__*/jsx(EventHandlersContext.Provider, {
-          value: eventHandlers,
-          children: /*#__PURE__*/jsx(MenuList, _extends({}, restProps, {
-            ariaLabel: ariaLabel || 'Menu',
-            externalRef: externalRef,
-            containerRef: containerRef,
-            onClose: onClose
-          }))
-        })
+    ref: containerRef
+  }), state && /*#__PURE__*/jsx(SettingsContext.Provider, {
+    value: settings,
+    children: /*#__PURE__*/jsx(ItemSettingsContext.Provider, {
+      value: itemSettings,
+      children: /*#__PURE__*/jsx(EventHandlersContext.Provider, {
+        value: eventHandlers,
+        children: /*#__PURE__*/jsx(MenuList, _extends({}, restProps, {
+          ariaLabel: ariaLabel || 'Menu',
+          externalRef: externalRef,
+          containerRef: containerRef,
+          onClose: onClose
+        }))
       })
     })
   }));

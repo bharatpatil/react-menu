@@ -22,6 +22,7 @@ var menuPropTypes = /*#__PURE__*/_extends({
 });
 var rootMenuPropTypes = /*#__PURE__*/_extends({}, menuPropTypes, {
   containerProps: object,
+  containerKey: string,
   initialMounted: bool,
   unmountOnClose: bool,
   transition: /*#__PURE__*/oneOfType([bool, /*#__PURE__*/exact({

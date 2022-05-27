@@ -25,6 +25,7 @@ export const menuPropTypes = {
 export const rootMenuPropTypes = {
   ...menuPropTypes,
   containerProps: object,
+  containerKey: string,
   initialMounted: bool,
   unmountOnClose: bool,
   transition: oneOfType([

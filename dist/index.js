@@ -273,6 +273,7 @@ var menuPropTypes = /*#__PURE__*/_extends({
 });
 var rootMenuPropTypes = /*#__PURE__*/_extends({}, menuPropTypes, {
   containerProps: propTypes.object,
+  containerKey: propTypes.string,
   initialMounted: propTypes.bool,
   unmountOnClose: propTypes.bool,
   transition: /*#__PURE__*/propTypes.oneOfType([propTypes.bool, /*#__PURE__*/propTypes.exact({
@@ -1427,7 +1428,7 @@ var MenuList = function MenuList(_ref) {
   }));
 };
 
-var _excluded$8 = ["aria-label", "className", "containerProps", "initialMounted", "unmountOnClose", "transition", "transitionTimeout", "boundingBoxRef", "boundingBoxPadding", "reposition", "submenuOpenDelay", "submenuCloseDelay", "skipOpen", "viewScroll", "portal", "theming", "onItemClick", "onClose"];
+var _excluded$8 = ["aria-label", "className", "containerProps", "initialMounted", "unmountOnClose", "transition", "transitionTimeout", "boundingBoxRef", "boundingBoxPadding", "reposition", "submenuOpenDelay", "submenuCloseDelay", "skipOpen", "viewScroll", "portal", "theming", "onItemClick", "onClose", "containerKey"];
 var ControlledMenu = /*#__PURE__*/react.forwardRef(function ControlledMenu(_ref, externalRef) {
   var ariaLabel = _ref['aria-label'],
       className = _ref.className,
@@ -1451,6 +1452,7 @@ var ControlledMenu = /*#__PURE__*/react.forwardRef(function ControlledMenu(_ref,
       theming = _ref.theming,
       onItemClick = _ref.onItemClick,
       onClose = _ref.onClose,
+      containerKey = _ref.containerKey,
       restProps = _objectWithoutPropertiesLoose(_ref, _excluded$8);
 
   var containerRef = react.useRef(null);
@@ -1547,26 +1549,27 @@ var ControlledMenu = /*#__PURE__*/react.forwardRef(function ControlledMenu(_ref,
     onBlur: handleBlur
   }, containerProps);
 
-  var menuList = /*#__PURE__*/jsxRuntime.jsx("div", _extends({}, containerProps, handlers, {
+  var menuList = /*#__PURE__*/react.createElement("div", _extends({}, containerProps, {
+    key: containerKey
+  }, handlers, {
     className: useBEM({
       block: menuContainerClass,
       modifiers: modifiers,
       className: className
     }),
-    ref: containerRef,
-    children: state && /*#__PURE__*/jsxRuntime.jsx(SettingsContext.Provider, {
-      value: settings,
-      children: /*#__PURE__*/jsxRuntime.jsx(ItemSettingsContext.Provider, {
-        value: itemSettings,
-        children: /*#__PURE__*/jsxRuntime.jsx(EventHandlersContext.Provider, {
-          value: eventHandlers,
-          children: /*#__PURE__*/jsxRuntime.jsx(MenuList, _extends({}, restProps, {
-            ariaLabel: ariaLabel || 'Menu',
-            externalRef: externalRef,
-            containerRef: containerRef,
-            onClose: onClose
-          }))
-        })
+    ref: containerRef
+  }), state && /*#__PURE__*/jsxRuntime.jsx(SettingsContext.Provider, {
+    value: settings,
+    children: /*#__PURE__*/jsxRuntime.jsx(ItemSettingsContext.Provider, {
+      value: itemSettings,
+      children: /*#__PURE__*/jsxRuntime.jsx(EventHandlersContext.Provider, {
+        value: eventHandlers,
+        children: /*#__PURE__*/jsxRuntime.jsx(MenuList, _extends({}, restProps, {
+          ariaLabel: ariaLabel || 'Menu',
+          externalRef: externalRef,
+          containerRef: containerRef,
+          onClose: onClose
+        }))
       })
     })
   }));

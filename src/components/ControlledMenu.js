@@ -39,6 +39,7 @@ export const ControlledMenu = forwardRef(function ControlledMenu(
     theming,
     onItemClick,
     onClose,
+    containerKey,
     ...restProps
   },
   externalRef
@@ -152,6 +153,7 @@ export const ControlledMenu = forwardRef(function ControlledMenu(
   const menuList = (
     <div
       {...containerProps}
+      key={containerKey}
       {...handlers}
       className={useBEM({
         block: menuContainerClass,
