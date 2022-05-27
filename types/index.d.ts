@@ -252,6 +252,10 @@ interface RootMenuProps extends BaseMenuProps, MenuStateOptions {
    */
   containerProps?: Omit<React.HTMLAttributes<HTMLElement>, 'className'>;
   /**
+   * assigns react key to containers
+   */
+  containerKey?: string;
+  /**
    * A ref object attached to a DOM element within which menu will be positioned.
    * If not provided, the nearest ancestor which has CSS `overflow` set to a value
    * other than 'visible' or the browser viewport will serve as the bounding box.
